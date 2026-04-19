@@ -1,5 +1,9 @@
 version: 0.2
 
+env:
+  variables:
+    IMAGE_TAG: latest
+
 phases:
   pre_build:
     commands:
@@ -9,15 +13,16 @@ phases:
   build:
     commands:
       - echo Building Docker image...
-      - docker build -t notes-app .
-      - docker tag notes-app:latest 774525420036.dkr.ecr.ap-south-1.amazonaws.com/notes-app:latest
+      - docker build -t notes-app:$IMAGE_TAG .
+      - docker tag notes-app:$IMAGE_TAG 774525420036.dkr.ecr.ap-south-1.amazonaws.com/notes-app:$IMAGE_TAG
 
   post_build:
     commands:
       - echo Pushing Docker image...
-      - docker push 774525420036.dkr.ecr.ap-south-1.amazonaws.com/notes-app:latest
+      - docker push 774525420036.dkr.ecr.ap-south-1.amazonaws.com/notes-app:$IMAGE_TAG
+
       - echo Creating imagedefinitions.json...
-      - printf '[{"name":"notes-app-container","imageUri":"774525420036.dkr.ecr.ap-south-1.amazonaws.com/notes-app:latest"}]' > imagedefinitions.json
+      - printf '[{"name":"notes-app-container","imageUri":"774525420036.dkr.ecr.ap-south-1.amazonaws.com/notes-app:%s"}]' $IMAGE_TAG > imagedefinitions.json
 
 artifacts:
   files:
