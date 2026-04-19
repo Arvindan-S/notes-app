@@ -5,7 +5,7 @@ app.use(express.json());
 
 let notes = [];
 
-const VERSION = "v1";
+const VERSION = "v2";
 const LAST_UPDATED = new Date().toLocaleString();
 
 app.get('/', (req, res) => {
