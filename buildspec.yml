@@ -4,15 +4,15 @@ phases:
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
-      - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin <774525420036.dkr.ecr.ap-south-1.amazonaws.com/notes-app>
+      - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 774525420036.dkr.ecr.ap-south-1.amazonaws.com
 
   build:
     commands:
       - echo Building Docker image...
       - docker build -t notes-app .
-      - docker tag notes-app:latest <ECR-URL>:latest
+      - docker tag notes-app:latest 774525420036.dkr.ecr.ap-south-1.amazonaws.com/notes-app:latest
 
   post_build:
     commands:
       - echo Pushing Docker image...
-      - docker push <ECR-URL>:latest
+      - docker push 774525420036.dkr.ecr.ap-south-1.amazonaws.com/notes-app:latest
